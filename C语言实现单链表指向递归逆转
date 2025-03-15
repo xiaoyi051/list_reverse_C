@@ -1,0 +1,67 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node * List;
+typedef struct node{
+	int data;
+	struct node* next;
+}Node;
+List listcreeat();
+List reverse(List p1,List p2);
+List Reverse(List head);
+void listcout(List head);
+ 
+int main() {
+    List head;
+    head = listcreeat();
+    printf("reverse前:\n");
+    listcout(head);
+    head = Reverse(head);
+    printf("reverse后:\n");
+    listcout(head);
+	return 0;
+}
+List listcreeat(){
+	List q;
+	List p=(List)malloc(sizeof(Node));
+	p->next=NULL;
+	List head=p;
+	int a;
+	printf("输入-1结束存储数字到链表\n");
+	scanf("%d",&a);
+	while(a!=-1){
+		q=(List)malloc(sizeof(Node));
+		q->data=a;
+		p->next=q;
+		p=q;
+		scanf("%d",&a);
+	}
+	p->next=NULL;
+	return head;
+}
+
+List reverse(List p1,List p2){
+	if(p2->next==NULL){
+		p2->next=p1;
+		return p2;
+	}
+	else{
+		List newfirst = reverse(p2,p2->next);
+		p2->next=p1;
+		return newfirst;
+	}
+}
+
+List Reverse(List head){
+	List p1 =NULL,p2 =head->next;
+	head->next=reverse(p1,p2);
+	return head;
+}
+
+void listcout(List head){
+	List p=head->next;
+	while(p){
+		printf("%d ",p->data);
+		p=p->next;
+	}
+	printf("\n");
+}
